@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<div>
+    <div>
+        Mantenimiento de Usuarios:
+    </div>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Edad</th>
+                <th scope="col">Correo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="usuario :${usuariolist}">
+                <td th:text="${usuario.idusuario}"></td>
+                <td th:text="${usuario.nombre}"></td>
+                <td th:text="${usuario.apellidos}"></td>
+                <td th:text="${usuario.edad}"></td>
+                <td th:text="${usuario.correo}"></td>
+                <td th:text="${usuario.rol.nombre}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

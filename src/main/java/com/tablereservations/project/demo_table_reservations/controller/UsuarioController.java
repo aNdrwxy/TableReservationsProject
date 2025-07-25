@@ -21,7 +21,7 @@ public class UsuarioController {
 
     // localhos:8080/user
     @GetMapping
-    public String index(Model model) {
+    public String list(Model model) {
         model.addAttribute("usuariolist",
                 usuarioService.getAllUsuarios());
         return "user/list";
@@ -60,3 +60,4 @@ public class UsuarioController {
         return "redirect:/user";
     }
 }
+
