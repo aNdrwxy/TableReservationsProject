@@ -13,10 +13,11 @@ public class Usuario {
     private String apellidos;
     private int edad;
     private String correo;
-    private String clave;
+    private String password;
+    private Boolean activo;
 
     @ManyToOne
-    @JoinColumn(name = "id_rol")
+    @JoinColumn(name = "idrol")
     private Rol rol;
 
     public Integer getIdusuario() {
@@ -59,12 +60,12 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public String getClave() {
-        return clave;
+    public String getPassword() {
+        return password;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Rol getRol() {
@@ -73,5 +74,13 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }

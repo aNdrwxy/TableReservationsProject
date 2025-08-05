@@ -7,7 +7,8 @@ public class RegisterUsuarioDto {
     private String apellidos;
     private int edad;
     private String correo;
-    private String clave;
+    private String password;
+    private boolean activo;
     private Integer id_rol;
 
     public Integer getIdusuario() {
@@ -50,12 +51,12 @@ public class RegisterUsuarioDto {
         this.correo = correo;
     }
 
-    public String getClave() {
-        return clave;
+    public String getPassword() {
+        return password;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getId_rol() {
@@ -64,5 +65,13 @@ public class RegisterUsuarioDto {
 
     public void setId_rol(Integer id_rol) {
         this.id_rol = id_rol;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

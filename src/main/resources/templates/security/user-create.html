@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create - User</title>
+    <link th:href="@{/css/SecurityStyle/user-createStyle.css}" rel="stylesheet"/>
+    <link th:href="@{/css/layoutStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<header th:replace="~{layout::headerPostLogin}"></header>
+<div class="registro-box">
+    <h2>Registrar Nuevo Usuario</h2>
+    <form th:action="@{/security/user/register}" th:object="${user}" method="post">
+        <input type="text" th:field="*{nombre}" id="txtnombre" placeholder="Nombre" required>
+        <input type="text" th:field="*{apellidos}" id="txtapellidos" placeholder="Apellido" required>
+        <input type="number" th:field="*{edad}" id="txtedad" placeholder="Edad" required>
+        <input type="email" th:field="*{correo}" id="txtcorreo" placeholder="Correo electrónico" required>
+
+        <label class="form-label">Rol:</label>
+        <ul class="list-group">
+            <li class="list-group-item" th:each="rol : ${rolList}">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio"
+                           th:field="*{id_rol}" th:value="${rol.idrol}" th:id="${'rol_' + rol.idrol}">
+                    <label class="form-check-label" th:for="${'rol_' + rol.idrol}" th:text="${rol.nombre}"></label>
+                </div>
+            </li>
+        </ul>
+        <button type="submit">Registrar</button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,72 +1,98 @@
 package com.tablereservations.project.demo_table_reservations.service;
 
+import jakarta.mail.MessagingException;
 import com.tablereservations.project.demo_table_reservations.dto.RegisterUsuarioDto;
 import com.tablereservations.project.demo_table_reservations.model.Rol;
 import com.tablereservations.project.demo_table_reservations.model.Usuario;
+import com.tablereservations.project.demo_table_reservations.repository.RolRepository;
 import com.tablereservations.project.demo_table_reservations.repository.UsuarioRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.tablereservations.project.demo_table_reservations.util.RandomPassword;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.tablereservations.project.demo_table_reservations.util.RandomPassword.generateRandomPassword;
 
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final RolRepository rolRepository;
+    private final EmailService emailService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, RolRepository rolRepository, EmailService emailService) {
         this.usuarioRepository = usuarioRepository;
+        this.rolRepository = rolRepository;
+        this.emailService = emailService;
     }
 
-    public List<Usuario> getAllUsuarios() {
+    public List<Usuario> getAllUsers() {
         return usuarioRepository.findAll();
     }
 
-    public Usuario getUsuarioById(int id) {
-        return usuarioRepository.findById(id).orElse(null);
+    public Usuario getUsuarioById(int idusuario) {
+        return usuarioRepository.findById(idusuario).orElse(null);
     }
 
-    public RegisterUsuarioDto getUsuarioDtoById(int id){
-        Usuario usuario = getUsuarioById(id);
+    public Usuario getUserByCorreo(String correo){
+        return usuarioRepository.findByCorreo(correo);
+    }
+
+    public RegisterUsuarioDto getRegisterUserDto(int idusuario){
+        Usuario usuario = usuarioRepository.findById(idusuario).orElse(null);
         if(usuario != null){
-            RegisterUsuarioDto usuarioDto = new RegisterUsuarioDto();
-            usuarioDto.setIdusuario(usuario.getIdusuario());
-            usuarioDto.setNombre(usuario.getNombre());
-            usuarioDto.setApellidos(usuario.getApellidos());
-            usuarioDto.setEdad(usuario.getEdad());
-            usuarioDto.setCorreo(usuario.getCorreo());
-            usuarioDto.setClave(usuario.getClave());
-            usuarioDto.setId_rol(usuario.getRol().getIdrol());
-            return usuarioDto;
+            RegisterUsuarioDto registerUserDto = new RegisterUsuarioDto();
+            registerUserDto.setIdusuario(usuario.getIdusuario());
+            registerUserDto.setNombre(usuario.getNombre());
+            registerUserDto.setApellidos(usuario.getApellidos());
+            registerUserDto.setEdad(usuario.getEdad());
+            registerUserDto.setCorreo(usuario.getCorreo());
+            registerUserDto.setPassword(usuario.getPassword());
+            registerUserDto.setActivo(usuario.getActivo());
+            registerUserDto.setId_rol(usuario.getRol().getIdrol());
+            return registerUserDto;
         }
         return null;
     }
 
-    public void editUsuario(RegisterUsuarioDto usuarioDto){
-        Usuario editUsuario = getUsuarioById(usuarioDto.getIdusuario());
-        editUsuario.setNombre(usuarioDto.getNombre());
-        editUsuario.setApellidos(usuarioDto.getApellidos());
-        editUsuario.setEdad(usuarioDto.getEdad());
-        editUsuario.setCorreo(usuarioDto.getCorreo());
-        editUsuario.setClave(usuarioDto.getClave());
-        Rol rol = new Rol();
-        rol.setIdrol(usuarioDto.getId_rol());
-        editUsuario.setRol(rol);
-        registerUsuario(editUsuario);
-    }
+    public void registerUser(RegisterUsuarioDto registerUserDto) throws MessagingException {
+        Usuario usuario;
+        String password;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public void createUsuario(RegisterUsuarioDto usuarioDto){
-        Usuario newUsuario = new Usuario();
-        newUsuario.setNombre(usuarioDto.getNombre());
-        newUsuario.setApellidos(usuarioDto.getApellidos());
-        newUsuario.setEdad(usuarioDto.getEdad());
-        newUsuario.setCorreo(usuarioDto.getCorreo());
-        newUsuario.setClave(usuarioDto.getClave());
-        Rol rol = new Rol();
-        rol.setIdrol(usuarioDto.getId_rol());
-        registerUsuario(newUsuario);
-    }
+        if (registerUserDto.getIdusuario() != null) {
+            // Usuario ya existe, editar
+            usuario = usuarioRepository.findById(registerUserDto.getIdusuario()).orElse(null);
+            if (usuario == null) {
+                throw new IllegalArgumentException("Usuario no encontrado");
+            }
+            usuario.setActivo(registerUserDto.isActivo());
+        } else {
+            usuario = new Usuario();
 
-    public void registerUsuario(Usuario usuario) {
+            // Generar contraseña automática
+            password = generateRandomPassword(registerUserDto.getApellidos());
+            usuario.setPassword(passwordEncoder.encode(password));
+            usuario.setActivo(true);
+
+            // Enviar email con la contraseña generada
+            emailService.enviarEmail(registerUserDto.getCorreo(),
+                    "Hola, " + registerUserDto.getNombre() +
+                            ", tu clave de acceso es: " + password);
+        }
+
+
+        usuario.setNombre(registerUserDto.getNombre());
+        usuario.setApellidos(registerUserDto.getApellidos());
+        usuario.setCorreo(registerUserDto.getCorreo());
+        usuario.setEdad(registerUserDto.getEdad());
+
+        Rol rol = rolRepository.findById(registerUserDto.getId_rol())
+                .orElseThrow(() -> new IllegalArgumentException("Rol no válido"));
+        usuario.setRol(rol);
+
         usuarioRepository.save(usuario);
     }
+
 }

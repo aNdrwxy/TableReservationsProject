@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listado de Usuarios - Sabor Noble</title>
+    <link th:href="@{/css/SecurityStyle/listStyle.css}" rel="stylesheet"/>
+    <link th:href="@{/css/layoutStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<header th:replace="~{layout::headerPostLogin}"></header>
+<div class="fondo">
+    <div class="contenedor-usuarios">
+        <h2>Listado de Trabajadores</h2>
+
+        <div class="buscador">
+            <input type="text" placeholder="Buscar usuario..." />
+        </div>
+
+        <div class="tabla">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Edad</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Actualizar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user :${userList}">
+                    <td th:text="${user.idusuario}"></td>
+                    <td th:text="${user.nombre}"></td>
+                    <td th:text="${user.apellidos}"></td>
+                    <td th:text="${user.edad}"></td>
+                    <td th:text="${user.correo}"></td>
+                    <td th:text="${user.rol.nombre}"></td>
+                    <td><a th:href="@{/security/user/edit/{id}(id=${user.idusuario})}" class="boton-crear">Editar</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="boton-crear">
+            <a th:href="@{/security/user/create}">
+                <button>Crear usuario</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

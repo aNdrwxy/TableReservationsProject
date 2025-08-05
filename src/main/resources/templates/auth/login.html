@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link th:href="@{/css/authStyle/login.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<header th:replace="~{layout::header}"></header>
+
+<div class="cuerpo">
+  <div class="textPresentacion">
+    <div class="texbox2">
+      <div class="margintext">
+        <h1>Bienvenidos a Sabor Noble</h1>
+        <h3>Gastronomía gourmet con alma y ambición</h3>
+        <p>En el corazón de la ciudad nace Sabor Noble, un restaurante gourmet que, aunque nuevo, llega con
+          una
+          visión clara: elevar cada comida a una experiencia inolvidable. Nuestra propuesta es audaz y
+          refinada, con una cocina de autor que fusiona técnicas modernas con ingredientes frescos,
+          locales y
+          de la más alta calidad.</p>
+        <p>Detrás de cada plato hay un equipo de cocineros talentosos, apasionados por la innovación y el
+          detalle. Jóvenes, creativos y con formación internacional, nuestros chefs han unido fuerzas para
+          crear una carta que sorprende tanto por su presentación como por sus sabores intensos y
+          equilibrados.</p>
+      </div>
+
+    </div>
+    <div class="cocineroBox">
+      <img class="cocinero"
+           src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2hlZiUyMGNvb2tpbmd8ZW58MHx8MHx8fDA%3D"
+           alt="">
+    </div>
+  </div>
+  <form th:action="@{/auth/login}" method="post" class="login">
+      <h1 class="titleLogin">Iniciar Sesion</h1>
+      <div class="inputBox marginInput">
+        <p class="texbox">Usuario</p>
+        <input class="inputLogin" type="correo" name="correo" id="correo" placeholder="name@example.com">
+      </div>
+      <div class="inputBox">
+        <p class="texbox">Contraseña</p>
+        <input class="inputLogin" type="password" name="password" id="password" placeholder="Password">
+      </div>
+      <div>
+        <button class="botonInicio">Iniciar</button>
+      </div>
+  </form>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/css/layoutStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+    <header th:fragment="header" class="headerbox">
+        <div>
+            <img class="logoHeader" th:src="@{/imgs/LogoRestaurante.png}" alt=""/></div>
+        <div class="boxNavegation">
+            <button class="botonNavegation firstboton">Informacion</button>
+            <button class="botonNavegation">Reservas</button>
+            <button class="botonNavegation">Experiencias</button>
+            <button class="botonNavegation">Ubicacion</button>
+            <button class="botonNavegation lastboton">Menus</button>
+        </div>
+        <div>
+            <a th:href="@{/auth/register}">
+                <button class="botonHeader">Registro</button>
+            </a>
+        </div>
+    </header>
+
+
+    <nav th:fragment="headerPostLogin" class="headerbox">
+        <div>
+            <img class="logoHeader" th:src="@{/imgs/LogoRestaurante.png}" alt=""/></div>
+        <div class="boxNavegation">
+            <button class="botonNavegation firstboton">Informacion</button>
+            <button class="botonNavegation">Reservas</button>
+            <button class="botonNavegation">Experiencias</button>
+            <button class="botonNavegation">Ubicacion</button>
+            <button class="botonNavegation lastboton">Menus</button>
+        </div>
+        <div>
+            <button sec:authorize="hasRole('Administrador')" class="botonHeader"><a th:href="@{/security/user}">Trabajadores</a></button>
+            <form th:action="@{/logout}">
+                <label th:text="${session.correo}"></label>&nbsp;
+                <button class="botonHeader" type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
+</body>
+</html>
