@@ -9,26 +9,26 @@
 <body>
 
 <header th:replace="~{layout::headerPostLogin}"></header>
-<div class="registro-box">
-    <h2>Registrar Nuevo Usuario</h2>
-    <form th:action="@{/security/user/register}" th:object="${user}" method="post">
-        <input type="text" th:field="*{nombre}" id="txtnombre" placeholder="Nombre" required>
-        <input type="text" th:field="*{apellidos}" id="txtapellidos" placeholder="Apellido" required>
-        <input type="number" th:field="*{edad}" id="txtedad" placeholder="Edad" required>
-        <input type="email" th:field="*{correo}" id="txtcorreo" placeholder="Correo electrónico" required>
+<div class="fondo">
+    <div class="registro-box">
+        <h2>Registrar Nuevo Usuario</h2>
+        <form th:action="@{/security/user/register}" th:object="${user}" method="post">
+            <input type="text" th:field="*{nombre}" id="txtnombre" placeholder="Nombre" required>
+            <input type="text" th:field="*{apellidos}" id="txtapellidos" placeholder="Apellido" required>
+            <input type="number" th:field="*{edad}" id="txtedad" placeholder="Edad" required>
+            <input type="email" th:field="*{correo}" id="txtcorreo" placeholder="Correo electrónico" required>
 
-        <label class="form-label">Rol:</label>
-        <ul class="list-group">
-            <li class="list-group-item" th:each="rol : ${rolList}">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio"
-                           th:field="*{id_rol}" th:value="${rol.idrol}" th:id="${'rol_' + rol.idrol}">
-                    <label class="form-check-label" th:for="${'rol_' + rol.idrol}" th:text="${rol.nombre}"></label>
-                </div>
-            </li>
-        </ul>
-        <button type="submit">Registrar</button>
-    </form>
+            <label for="rol">Rol</label>
+            <select id="rol" name="rol" th:field="*{id_rol}" required>
+                <option value="" disabled selected>Seleccione un rol</option>
+                <option th:each="rol : ${rolList}"
+                        th:value="${rol.idrol}"
+                        th:text="${rol.nombre}">
+                </option>
+            </select>
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
 </div>
 
 </body>

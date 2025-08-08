@@ -1,1 +1,129 @@
-/* Estilos de la vista "edit" */
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1551218808-94e220e084d2');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .headerbox {
+            display: flex;
+            width: 100%;
+            height: 96px;
+            margin-top: 10px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logoHeader {
+            height: 117px;
+        }
+
+        .botonHeader {
+            height: 45px;
+            width: 168px;
+            border-radius: 16px;
+            border: 0px;
+            margin-right: 15px;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .botonHeader:hover {
+            background: black;
+            box-shadow: -2px 1px 22px rgb(181 181 181);
+            color: white;
+            transition: 0.5s;
+        }
+
+        .boxNavegation {
+            display: flex;
+            width: 50%;
+            height: 54px;
+            border-radius: 20px;
+        }
+
+        .botonNavegation {
+            width: 100%;
+            border: 0px;
+            transition: 0.5s;
+            cursor: pointer;
+        }
+
+        .firstboton {
+            border-radius: 20px 0px 0px 20px;
+        }
+
+        .lastboton {
+            border-radius: 0px 20px 20px 0px;
+        }
+
+        .botonNavegation:hover {
+            box-shadow: 4px 8px 2px rgb(104, 104, 104);
+            background: rgb(0, 0, 0);
+            color: white;
+            transition: 0.5s;
+        }
+
+        .contenedor {
+            max-width: 600px;
+            margin: 80px auto;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            color: #000;
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 15px 0 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        .botones {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .botones button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .boton-guardar {
+            background-color: #000000;
+            color: white;
+        }
+
+        .boton-cancelar {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .botones button:hover {
+            opacity: 0.9;
+        }

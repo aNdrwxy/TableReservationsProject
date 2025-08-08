@@ -29,7 +29,7 @@ public class EmailService {
     }
 
     public void enviarEmail(String emailDestino, String mensaje) throws MessagingException {
-        final String asunto = "Restaurante Central - Creación de Usuario";
+        final String asunto = "Sabor Noble - Creación de Usuario";
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         String[] toArray = {emailDestino};

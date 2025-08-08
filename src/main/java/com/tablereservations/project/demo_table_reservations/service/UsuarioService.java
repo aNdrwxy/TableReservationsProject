@@ -62,7 +62,6 @@ public class UsuarioService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         if (registerUserDto.getIdusuario() != null) {
-            // Usuario ya existe, editar
             usuario = usuarioRepository.findById(registerUserDto.getIdusuario()).orElse(null);
             if (usuario == null) {
                 throw new IllegalArgumentException("Usuario no encontrado");
@@ -71,12 +70,10 @@ public class UsuarioService {
         } else {
             usuario = new Usuario();
 
-            // Generar contraseña automática
             password = generateRandomPassword(registerUserDto.getApellidos());
             usuario.setPassword(passwordEncoder.encode(password));
             usuario.setActivo(true);
 
-            // Enviar email con la contraseña generada
             emailService.enviarEmail(registerUserDto.getCorreo(),
                     "Hola, " + registerUserDto.getNombre() +
                             ", tu clave de acceso es: " + password);
@@ -87,10 +84,6 @@ public class UsuarioService {
         usuario.setApellidos(registerUserDto.getApellidos());
         usuario.setCorreo(registerUserDto.getCorreo());
         usuario.setEdad(registerUserDto.getEdad());
-
-        Rol rol = rolRepository.findById(registerUserDto.getId_rol())
-                .orElseThrow(() -> new IllegalArgumentException("Rol no válido"));
-        usuario.setRol(rol);
 
         usuarioRepository.save(usuario);
     }

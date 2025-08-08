@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -22,7 +21,7 @@ public class UserDetailsImpService implements UserDetailsService {
     }
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-        Usuario usuario = usuarioService.getUserByCorreo(correo); // No por nombre de usuario
+        Usuario usuario = usuarioService.getUserByCorreo(correo);
 
         return buildUser(usuario);
     }
